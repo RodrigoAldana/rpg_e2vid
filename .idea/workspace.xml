@@ -165,7 +165,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/image_reconstructor.py</url>
-          <line>109</line>
+          <line>110</line>
           <option name="timeStamp" value="109" />
         </line-breakpoint>
       </breakpoints>
