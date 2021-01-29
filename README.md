@@ -171,9 +171,32 @@ export FRAMERATE=30
 python resample_reconstructions.py -i /path/to/input_folder -o /tmp/resampled -r $FRAMERATE
 ffmpeg -framerate $FRAMERATE -i /tmp/resampled/frame_%010d.png video_"$FRAMERATE"Hz.mp4
 ```
+## Training using MS-COCO dataset
+
+The [MS-COCO dataset](http://rpg.ifi.uzh.ch/E2VID.html) is a large dataset of training sequences generated using an event camera simulator. In order to train the network using this dataset you can run:
+
+
+```bash
+python training.py \
+  -t PATH_TO_ECOCO_DEPTHMAPS_TEST/train/ \
+  -c checkpoints/ 
+```
+
+In order to evaluate the resulting models obtained from the checkpoints in the training step you can run:
+
+```bash
+python eval_checkpoint.py \
+  -c checkpoints/CHECKPOINT_NAME.pth \
+  -i data/dynamic_6dof.zip \
+  --auto_hdr \
+  --display \
+  --show_events
+```
 
 ## Acknowledgements
 
 This code borrows from the following open source projects, whom we would like to thank:
 
 - [pytorch-template](https://github.com/victoresque/pytorch-template)
+
+
