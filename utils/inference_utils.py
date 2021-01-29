@@ -62,12 +62,12 @@ class EventPreprocessor:
 
     def __init__(self, options):
 
-        print('== Event preprocessing ==')
+        # print('== Event preprocessing ==')
         self.no_normalize = options.no_normalize
-        if self.no_normalize:
-            print('!!Will not normalize event tensors!!')
-        else:
-            print('Will normalize event tensors.')
+        # if self.no_normalize:
+        #     print('!!Will not normalize event tensors!!')
+        # else:
+        #     print('Will normalize event tensors.')
 
         self.hot_pixel_locations = []
         if options.hot_pixels_file:
@@ -151,7 +151,32 @@ class IntensityRescaler:
 
         return img
 
+    def rescale(self,img):
+        """
+        param img: [1 x 1 x H x W] Tensor taking values in [0, 1]
+        """
+        if self.auto_hdr:
+            with CudaTimer('Compute Imin/Imax (auto HDR)'):
+                Imin = torch.min(img).item()
+                Imax = torch.max(img).item()
 
+                # ensure that the range is at least 0.1
+                Imin = np.clip(Imin, 0.0, 0.45)
+                Imax = np.clip(Imax, 0.55, 1.0)
+
+                # adjust image dynamic range (i.e. its contrast)
+                if len(self.intensity_bounds) > self.auto_hdr_median_filter_size:
+                    self.intensity_bounds.popleft()
+
+                self.intensity_bounds.append((Imin, Imax))
+                self.Imin = np.median([rmin for rmin, rmax in self.intensity_bounds])
+                self.Imax = np.median([rmax for rmin, rmax in self.intensity_bounds])
+
+        with CudaTimer('Intensity rescaling'):
+            img = 255.0 * (img - self.Imin) / (self.Imax - self.Imin)
+            img.clamp_(0.0, 255.0)
+
+        return img
 class ImageWriter:
     """
     Utility class to write images to disk.
@@ -255,6 +280,37 @@ class ImageDisplay:
 
         cv2.imshow(self.window_name, img)
         cv2.waitKey(self.wait_time)
+
+    def compare(self, img, events=None, ref=None):
+
+        if not self.display:
+            return
+
+        img = self.crop_outer_border(img, self.border)
+
+        if self.show_events:
+            assert(events is not None)
+            event_preview = make_event_preview(events, mode=self.event_display_mode,
+                                               num_bins_to_show=self.num_bins_to_show)
+            event_preview = self.crop_outer_border(event_preview, self.border)
+
+        if self.show_events:
+            img_is_color = (len(img.shape) == 3)
+            preview_is_color = (len(event_preview.shape) == 3)
+
+            if(preview_is_color and not img_is_color):
+                img = np.dstack([img] * 3)
+            elif(img_is_color and not preview_is_color):
+                event_preview = np.dstack([event_preview] * 3)
+            ref = ref.detach().cpu().numpy()
+            #ref = np.transpose(ref)#
+            ref = np.moveaxis(ref, 0, -1)
+            #img = ref/255.0
+            img = np.hstack([event_preview, img/255.0, ref/255.0])
+
+        cv2.imshow(self.window_name, img)
+        cv2.waitKey(self.wait_time)
+
 
 
 class UnsharpMaskFilter:
