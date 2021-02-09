@@ -69,7 +69,7 @@ for t in range(training_conf['epochs']):  # TRAIN FOR 160 EPOCHS
 
             # Run the network over the current sequence and evaluate it over L intervals
             for time_interval in range(training_conf['unroll_L']):
-                events, reference_frame = dataset.get_item(time_interval)
+                events, reference_frame, warped_frame = dataset.get_item(time_interval)
                 events = events.to(device)
                 reference_frame = reference_frame.to(device)
                 predicted_frame, states = model.forward(events, states)
