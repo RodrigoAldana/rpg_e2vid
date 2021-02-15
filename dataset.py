@@ -4,7 +4,9 @@ import numpy
 import os
 from torch.utils.data import Dataset
 from utils.inference_utils import CropParameters, EventPreprocessor
-from scipy.interpolate import interp2d
+from torch.nn.functional import grid_sample
+
+
 
 class EventSequences(Dataset):
 
@@ -55,7 +57,6 @@ class EventData:
         #The flow of index->index+1 is at flow[index]
         event_name = os.path.join(self.event_dir, self.event_tensors[index+1])
         frame_name = os.path.join(self.frame_dir, self.frames[index+1])
-        prev_frame_name = os.path.join(self.frame_dir, self.frames[index])
         flow_name = os.path.join(self.flow_dir, self.flow[index])
 
         event_array = numpy.load(event_name)
@@ -63,18 +64,8 @@ class EventData:
 
         frame = cv2.imread(frame_name)
 
-        prev_frame = cv2.imread(prev_frame_name)
         flow_array = numpy.load(flow_name)
-        frame_warped = self.warpImage(prev_frame, flow_array[0, :, :], flow_array[1, :, :])
 
-        # Use this piece of code to see how the difference between prev_frame and frame (left) is compared
-        # to the warped frame to frame (right). Ideally, warped_frame is close to frame, so the result should be darker
-        # fr = numpy.hstack([numpy.abs(prev_frame-frame),numpy.abs(frame_warped-frame)])
-        # cv2.imshow('dummy', fr.astype(numpy.uint8))
-        # cv2.waitKey(1)
-
-        warped_tensor = torch.tensor(numpy.transpose(frame_warped, (2, 0, 1)))
-        warped_tensor = warped_tensor.type(torch.FloatTensor)
         frame_tensor = torch.tensor(numpy.transpose(frame, (2, 0, 1)))
         frame_tensor = frame_tensor.type(torch.FloatTensor)
 
@@ -84,32 +75,41 @@ class EventData:
 
         pady = torch.zeros((3, 2, 240))
         frame_t = torch.cat((pady, frame_tensor, pady), 1)
-        warped_t = torch.cat((pady, warped_tensor, pady), 1)
+        frame_t = frame_t.unsqueeze(dim=0)
 
-        return events, frame_t, warped_t
+        flow_tensor = torch.tensor(numpy.transpose(flow_array, (1,2,0)))
+        flow_tensor = flow_tensor.type(torch.FloatTensor)
+        padf = torch.zeros((2, 240, 2))
+        flow = torch.cat((padf, flow_tensor, padf), 0)
+        flow = flow.unsqueeze(dim=0)
 
-    #WARP image taken from https://github.com/youngjung/flow-python
-    def warpImage(self, im, vx, vy, cast_uint8=True):
+        return events, frame_t, flow
 
-        height2, width2, nChannels = im.shape
-        height1, width1 = vx.shape
+def flow_warp(x, flow, interp_mode='bilinear', padding_mode='zeros'):
+    """Warp an image or feature map with optical flow
+    Args:
+        x (Tensor): size (N, C, H, W)
+        flow (Tensor): size (N, H, W, 2), normal value
+        interp_mode (str): 'nearest' or 'bilinear'
+        padding_mode (str): 'zeros' or 'border' or 'reflection'
 
-        x = numpy.linspace(1, width2, width2)
-        y = numpy.linspace(1, height2, height2)
-        X = numpy.linspace(1, width1, width1)
-        Y = numpy.linspace(1, height1, height1)
-        xx, yy = numpy.meshgrid(x, y)
-        XX, YY = numpy.meshgrid(X, Y)
-        XX = XX + vx
-        YY = YY + vy
+    Returns:
+        Tensor: warped image or feature map
+    """
+    assert x.size()[-2:] == flow.size()[1:3]
+    B, C, H, W = x.size()
+    # mesh grid
+    grid_y, grid_x = torch.meshgrid(torch.arange(0, H), torch.arange(0, W))
 
-        XX = numpy.clip(XX, 1, width2)
-        YY = numpy.clip(XX, 1, height2)
+    grid = torch.stack((grid_x, grid_y), 2).float()  # W(x), H(y), 2
+    grid.requires_grad = False
+    grid = grid.type_as(x)
+    vgrid = grid + flow
 
-        warpI2 = numpy.zeros((height1, width1, nChannels))
-        for i in range(nChannels):
-            f = interp2d(x, y, im[:, :, i], 'cubic')
-            foo = f(X, Y)
-            warpI2[:, :, i] = foo
+    # scale grid to [-1,1]
+    vgrid_x = 2.0 * vgrid[:, :, :, 0] / max(W - 1, 1) - 1.0
+    vgrid_y = 2.0 * vgrid[:, :, :, 1] / max(H - 1, 1) - 1.0
+    vgrid_scaled = torch.stack((vgrid_x, vgrid_y), dim=3)
 
-        return warpI2
+    output = grid_sample(x, vgrid_scaled, mode=interp_mode, padding_mode=padding_mode)
+    return output
