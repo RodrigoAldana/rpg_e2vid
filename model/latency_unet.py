@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as f
 from torch.nn import init
+from ttictoc import tic,toc
+
 from .latency_submodules import dyn_ConvLayer, dyn_TransposedConvLayer, dyn_ResidualBlock, dyn_RecurrentConvLayer
 
 def skip_concat(x1, x2):
@@ -54,7 +56,7 @@ class dyn_BaseUNet(nn.Module):
 
     def build_prediction_layer(self):
         self.pred = dyn_ConvLayer(self.base_num_channels if self.skip_type == 'sum' else 2 * self.base_num_channels,
-                              self.num_output_channels, 1, activation=None, norm=self.norm)
+                              self.num_output_channels, 1, activation=None, norm=self.norm, output_channels_keep = True)
 
 
 class dyn_UNetRecurrent(dyn_BaseUNet):
@@ -72,7 +74,7 @@ class dyn_UNetRecurrent(dyn_BaseUNet):
                                             use_upsample_conv)
 
         self.head = dyn_ConvLayer(self.num_input_channels, self.base_num_channels,
-                              kernel_size=5, stride=1, padding=2)  # N x C x H x W -> N x 32 x H x W
+                              kernel_size=5, stride=1, padding=2, input_channels_keep = True)  # N x C x H x W -> N x 32 x H x W
 
         self.encoders = nn.ModuleList()
         for input_size, output_size in zip(self.encoder_input_sizes, self.encoder_output_sizes):
@@ -85,6 +87,25 @@ class dyn_UNetRecurrent(dyn_BaseUNet):
         self.build_decoders()
         self.build_prediction_layer()
 
+        self.latency_mode = 0
+
+    def set_latency_mode(self, latency_mode):
+        self.latency_mode = latency_mode
+
+        self.head.set_latency_mode(latency_mode)
+
+        for encoder in self.encoders:
+            encoder.set_latency_mode(latency_mode)
+
+        for resblock in self.resblocks:
+            resblock.set_latency_mode(latency_mode)
+
+        for decoder in self.decoders:
+            decoder.set_latency_mode(latency_mode)
+
+        self.pred.set_latency_mode(latency_mode)
+
+
     def forward(self, x, prev_states):
         """
         :param x: N x num_input_channels x H x W
@@ -93,7 +114,10 @@ class dyn_UNetRecurrent(dyn_BaseUNet):
         """
 
         # head
+        # print("ABOUT TO EVALUATE HEAD")
+        # tic()
         x = self.head(x)
+        # print("HEAD: ", toc())
         head = x
 
         if prev_states is None:
@@ -102,20 +126,26 @@ class dyn_UNetRecurrent(dyn_BaseUNet):
         # encoder
         blocks = []
         states = []
+        # tic()
         for i, encoder in enumerate(self.encoders):
             x, state = encoder(x, prev_states[i])
             blocks.append(x)
             states.append(state)
-
+        # print("ENCODERS:", toc())
         # residual blocks
+        # tic()
         for resblock in self.resblocks:
             x = resblock(x)
-
+        # print("RESBLOCKS: ", toc())
         # decoder
+        # tic()
         for i, decoder in enumerate(self.decoders):
             x = decoder(self.apply_skip_connection(x, blocks[self.num_encoders - i - 1]))
+        # print("DECODER:", toc())
 
         # tail
+        # tic()
         img = self.activation(self.pred(self.apply_skip_connection(x, head)))
+        # print("PREDICTION: ", toc())
 
         return img, states

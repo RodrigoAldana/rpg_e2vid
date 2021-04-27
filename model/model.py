@@ -125,6 +125,12 @@ class dyn_E2VIDRecurrent(BaseE2VID):
                                            norm=self.norm,
                                            use_upsample_conv=self.use_upsample_conv)
 
+        self.latency_mode = 0
+
+    def set_latency_mode(self,latency_mode):
+        self.latency_mode = latency_mode
+        self.unetrecurrent.set_latency_mode(latency_mode)
+
     def forward(self, event_tensor, prev_states):
         """
         :param event_tensor: N x num_bins x H x W

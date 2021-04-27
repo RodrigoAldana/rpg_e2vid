@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as f
 from torch.nn import init
-
+from ttictoc import tic,toc
 
 class ConvLayer(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, stride=1, padding=0, activation='relu', norm=None):
@@ -22,6 +22,7 @@ class ConvLayer(nn.Module):
             self.norm_layer = nn.InstanceNorm2d(out_channels, track_running_stats=True)
 
     def forward(self, x):
+
         out = self.conv2d(x)
 
         if self.norm in ['BN', 'IN']:

@@ -2,11 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc9e207b-5b32-451e-830a-ed27ef121478" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/latency_training.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/latency_submodules.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/latency_unet.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/timing_evaluation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eval_checkpoint.py" beforeDir="false" afterPath="$PROJECT_DIR$/eval_checkpoint.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_reconstructor.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_reconstructor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/latency_training.py" beforeDir="false" afterPath="$PROJECT_DIR$/latency_training.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/latency_submodules.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/latency_submodules.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/latency_unet.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/latency_unet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/submodules.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/submodules.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/unet.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/unet.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +49,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../latsch_in_class" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.eval_checkpoint">
+  <component name="RunManager" selected="Python.timing_evaluation">
     <configuration name="eval_checkpoint" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rpg_e2vid" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -108,7 +113,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="testbench" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="timing_evaluation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rpg_e2vid" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -120,7 +125,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/testbench.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/timing_evaluation.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -152,18 +157,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.run_reconstruction" />
-      <item itemvalue="Python.testbench" />
       <item itemvalue="Python.training" />
       <item itemvalue="Python.eval_checkpoint" />
       <item itemvalue="Python.latency_training" />
+      <item itemvalue="Python.timing_evaluation" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.eval_checkpoint" />
+        <item itemvalue="Python.timing_evaluation" />
         <item itemvalue="Python.latency_training" />
-        <item itemvalue="Python.training" />
         <item itemvalue="Python.run_reconstruction" />
-        <item itemvalue="Python.testbench" />
+        <item itemvalue="Python.eval_checkpoint" />
+        <item itemvalue="Python.training" />
       </list>
     </recent_temporary>
   </component>
@@ -199,24 +204,19 @@
           <option name="timeStamp" value="134" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/model/submodules.py</url>
-          <line>40</line>
-          <option name="timeStamp" value="135" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/model/unet.py</url>
           <line>111</line>
           <option name="timeStamp" value="136" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/latency_training.py</url>
-          <line>26</line>
+          <line>104</line>
           <option name="timeStamp" value="137" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/model/latency_unet.py</url>
-          <line>83</line>
-          <option name="timeStamp" value="140" />
+          <url>file://$PROJECT_DIR$/model/unet.py</url>
+          <line>154</line>
+          <option name="timeStamp" value="138" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

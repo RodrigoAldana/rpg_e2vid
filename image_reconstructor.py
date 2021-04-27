@@ -20,7 +20,7 @@ class ImageReconstructor:
         self.height = height
         self.width = width
         self.num_bins = num_bins
-
+        self.mode = 0
         self.initialize(self.height, self.width, options)
 
     def initialize(self, height, width, options):
@@ -56,7 +56,11 @@ class ImageReconstructor:
 
     def update_reconstruction(self, event_tensor, event_tensor_id, stamp=None):
         with torch.no_grad():
-
+            if self.mode == 0:
+                self.mode = 1
+            else:
+                self.mode = 0
+            self.model.set_latency_mode(np.random.randint(2))
             with CudaTimer('Reconstruction'):
 
                 with CudaTimer('NumPy (CPU) -> Tensor (GPU)'):

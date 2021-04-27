@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as f
 from torch.nn import init
 from .submodules import ConvLayer, UpsampleConvLayer, TransposedConvLayer, RecurrentConvLayer, ResidualBlock, ConvLSTM, ConvGRU
-
+from ttictoc import tic,toc
 
 def skip_concat(x1, x2):
     return torch.cat([x1, x2], dim=1)
@@ -150,7 +150,10 @@ class UNetRecurrent(BaseUNet):
         """
 
         # head
+        # print("ABOUT TO EVALUATE HEAD")
+        # tic()
         x = self.head(x)
+        # print("HEAD: ", toc())
         head = x
 
         if prev_states is None:
@@ -159,20 +162,28 @@ class UNetRecurrent(BaseUNet):
         # encoder
         blocks = []
         states = []
+        # tic()
         for i, encoder in enumerate(self.encoders):
             x, state = encoder(x, prev_states[i])
             blocks.append(x)
             states.append(state)
+        # print("ENCODER ", i, " :", toc())
 
         # residual blocks
+        # tic()
         for resblock in self.resblocks:
             x = resblock(x)
+        # print("RESBLOCKS: ", toc())
 
         # decoder
+        # tic()
         for i, decoder in enumerate(self.decoders):
             x = decoder(self.apply_skip_connection(x, blocks[self.num_encoders - i - 1]))
+        # print("DECODER ", i, " :", toc())
 
         # tail
+        # tic()
         img = self.activation(self.pred(self.apply_skip_connection(x, head)))
+        # print("PREDICTION: ", toc())
 
         return img, states

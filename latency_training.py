@@ -6,6 +6,7 @@ from model.submodules import *
 from dataset import EventData, EventSequences, flow_warp
 from options.inference_options import set_inference_options
 from utils.inference_utils import IntensityRescaler
+from ttictoc import tic,toc
 import argparse
 
 args = argparse.ArgumentParser(description='Training a trained network')
@@ -41,6 +42,8 @@ training_conf = {'learning_rate': 1e-4,
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 model = model.to(device)
 
+model.set_latency_mode(1)
+
 # Resconstruction loss (LPIPS VGG)
 loss_fn_vgg = lpips.LPIPS(net='vgg')
 loss_fn_vgg = loss_fn_vgg.to(device)
@@ -60,6 +63,9 @@ intensity_rescaler = IntensityRescaler(options)
 # Instantiate event dataset (only paths to data)
 sequences = EventSequences(options.path_to_training_data)
 # Training
+
+mode = 0
+
 for t in range(training_conf['epochs']):  # TRAIN FOR 160 EPOCHS
     print('EPOCH ', t)
 
@@ -69,14 +75,23 @@ for t in range(training_conf['epochs']):  # TRAIN FOR 160 EPOCHS
     for i, batch in enumerate(seq_loader, 0):
         loss = 0
 
+        model.set_latency_mode(mode)
+        if mode == 0:
+            mode = 1
+        else:
+            mode = 0
         # Read mini batch data: all file pathnames inside sequences
         for seq in batch:
+
+
+
             dataset = EventData(root=options.path_to_training_data, seq=seq, width=240, height=180,
                                 num_encoders=model.num_encoders, options=options)
             states = None
             current_L = 0
 
             # Run the network over the current sequence and evaluate it over L intervals
+
             for time_interval in range(training_conf['unroll_L']):
                 events, reference_frame, flow = dataset.get_item(time_interval, num_encoders=model.num_encoders)
                 events = events.to(device)
@@ -88,7 +103,6 @@ for t in range(training_conf['epochs']):  # TRAIN FOR 160 EPOCHS
 
                 # Foward pass
                 predicted_frame, states = model.forward(events, states)
-
                 # Rescale image to range of 0-255.
                 # Same as intensity_rescaler(predicted_frame) but keeping floating point format
                 # predicted_frame = intensity_rescaler.rescale(predicted_frame)

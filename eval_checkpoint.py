@@ -52,7 +52,8 @@ if __name__ == "__main__":
 
     model = model.to(device)
     model.eval()
-
+    model.set_latency_mode(1)
+    print("LATENCY MODE: ", model.latency_mode)
     reconstructor = ImageReconstructor(model, height, width, model.num_bins, args)
 
     """ Read chunks of events using Pandas """
