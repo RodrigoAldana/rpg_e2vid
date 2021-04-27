@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc9e207b-5b32-451e-830a-ed27ef121478" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/latency_training.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/latency_submodules.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/latency_unet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/latency_training.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,11 +147,11 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.eval_checkpoint" />
+      <item itemvalue="Python.latency_training" />
       <item itemvalue="Python.run_reconstruction" />
       <item itemvalue="Python.testbench" />
       <item itemvalue="Python.training" />
-      <item itemvalue="Python.eval_checkpoint" />
-      <item itemvalue="Python.latency_training" />
     </list>
     <recent_temporary>
       <list>
