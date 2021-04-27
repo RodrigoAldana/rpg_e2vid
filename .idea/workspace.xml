@@ -156,11 +156,11 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.run_reconstruction" />
-      <item itemvalue="Python.training" />
       <item itemvalue="Python.eval_checkpoint" />
       <item itemvalue="Python.latency_training" />
+      <item itemvalue="Python.run_reconstruction" />
       <item itemvalue="Python.timing_evaluation" />
+      <item itemvalue="Python.training" />
     </list>
     <recent_temporary>
       <list>
