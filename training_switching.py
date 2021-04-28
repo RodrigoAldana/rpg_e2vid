@@ -19,23 +19,25 @@ options = args.parse_args()
 # Instantiate model as E2VIDRecurrent
 net_conf = {'num_bins': 5,
             'recurrent_block_type': 'convlstm',
-            'base_num_channels': 16,
+            'base_num_channels': 32,
             'num_encoders': 3,
             'num_residual_blocks': 2,
             'use_upsample_conv': False,
             'norm': 'BN'}
-model = E2VIDRecurrent(net_conf)
+
+model = E2VIDSwitching(net_conf)
 
 # Training configuration
 # Important: unroll_L defines how much data must be driven to the GPU at the same time.
 # With current GPU, L=40 is not possible. Check nvidia-smi in a terminal to monitor memory usage
 training_conf = {'learning_rate': 1e-4,
                  'epochs': 160,
-                 'unroll_L': 15,
+                 'unroll_L': 9,
                  'height': 180,
                  'width': 240,
                  'batch_size': 2,
-                 'checkpoint_interval': 100}
+                 'checkpoint_interval': 100,
+                 'lambda_translation': 0.5}
 
 # Set GPU as main torch device (if available) and move model to it
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
@@ -73,7 +75,8 @@ for t in range(training_conf['epochs']):  # TRAIN FOR 160 EPOCHS
         for seq in batch:
             dataset = EventData(root=options.path_to_training_data, seq=seq, width=240, height=180,
                                 num_encoders=model.num_encoders, options=options)
-            states = None
+            statesBase = None
+            statesReduced = None
             current_L = 0
 
             # Run the network over the current sequence and evaluate it over L intervals
@@ -87,30 +90,35 @@ for t in range(training_conf['epochs']):  # TRAIN FOR 160 EPOCHS
                 reference_frame = reference_frame/255
 
                 # Foward pass
-                predicted_frame, states = model.forward(events, states)
-
+                # predicted_frame, states = model.forward(events, states)
+                img_predBase, img_predReduced, statesBase, statesReduced, Base_Reduced, Reduced_Base= model.forward(events, statesBase, statesReduced)
                 # Rescale image to range of 0-255.
                 # Same as intensity_rescaler(predicted_frame) but keeping floating point format
                 # predicted_frame = intensity_rescaler.rescale(predicted_frame)
 
-                # Temporal consistency and reconstruction loss
-                if (current_L < L_0):
-                    # Skip temporal consistency loss for the first L0 elements in order for reconstruction to converge
-                    temporal_consistency_loss = 0
-                    current_L += 1
-                else:
-                    warpedimg = flow_warp(prev_reference_frame, flow)
-                    B, C, H, W = warpedimg.size()
-                    coef = math.exp(-alpha * torch.norm((reference_frame[:, :, m:H - m, m:W - m] - warpedimg[:, :, m:H - m, m:W - m]), 2) ** 2)
-                    warpedrec = flow_warp(prev_predicted_frame, flow)
-                    temporal_consistency_loss = coef * torch.norm(
-                        (predicted_frame[:, :, m:H - m, m:W - m] - warpedrec[:, :, m:H - m, m:W - m]), 1)
+                # # Temporal consistency and reconstruction loss
+                # if (current_L < L_0):
+                #     # Skip temporal consistency loss for the first L0 elements in order for reconstruction to converge
+                #     temporal_consistency_loss = 0
+                #     current_L += 1
+                # else:
+                #     warpedimg = flow_warp(prev_reference_frame, flow)
+                #     B, C, H, W = warpedimg.size()
+                #     coef = math.exp(-alpha * torch.norm((reference_frame[:, :, m:H - m, m:W - m] - warpedimg[:, :, m:H - m, m:W - m]), 2) ** 2)
+                #     warpedrec = flow_warp(prev_predicted_frame, flow)
+                #     temporal_consistency_loss = coef * torch.norm(
+                #         (predicted_frame[:, :, m:H - m, m:W - m] - warpedrec[:, :, m:H - m, m:W - m]), 1)
 
-                loss = loss + (loss_fn_vgg(predicted_frame, reference_frame) + lambda_tc * temporal_consistency_loss)
+                # loss = loss + (loss_fn_vgg(predicted_frame, reference_frame) + lambda_tc * temporal_consistency_loss)
+                translation_loss = model.translation_loss(statesBase, statesReduced, Base_Reduced, Reduced_Base)
 
-                with torch.no_grad():
-                    prev_predicted_frame = predicted_frame
-                    prev_reference_frame = reference_frame
+                loss = loss + loss_fn_vgg(img_predBase, reference_frame) +loss_fn_vgg(img_predReduced, reference_frame)
+                # print(loss_fn_vgg(img_predBase, reference_frame) +loss_fn_vgg(img_predReduced, reference_frame))
+                loss = loss +translation_loss*training_conf['lambda_translation']
+                # print(translation_loss)
+                # with torch.no_grad():
+                #     prev_predicted_frame = predicted_frame
+                #     prev_reference_frame = reference_frame
 
             print(seq)
 

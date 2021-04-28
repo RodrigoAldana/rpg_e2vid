@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc9e207b-5b32-451e-830a-ed27ef121478" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/latency_training.py" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/eval.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eval_checkpoint_switching.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_reconstructor_switching.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/timing_evaluation.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/training_switching.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training.py" beforeDir="false" afterPath="$PROJECT_DIR$/training.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,11 +44,16 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../latsch_in_class" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.eval_checkpoint">
-    <configuration name="eval_checkpoint" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.eval_checkpoint_switching">
+    <configuration name="eval_checkpoint_switching" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rpg_e2vid" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -53,8 +65,8 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/eval_checkpoint.py" />
-      <option name="PARAMETERS" value="-c checkpoints/checkpoints_dyn/m_9_99.pth   -i data/dynamic_6dof.zip   --auto_hdr   --display   --show_events" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/eval_checkpoint_switching.py" />
+      <option name="PARAMETERS" value="-c checkpoints/m_4_199.pth   -i data/dynamic_6dof.zip   --auto_hdr   --display   --show_events" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -62,20 +74,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="latency_training" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="image_reconstructor_switching" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rpg_e2vid" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="$USER_HOME$/anaconda3/envs/event/bin/python" />
+      <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/latency_training.py" />
-      <option name="PARAMETERS" value="-t $PROJECT_DIR$/..//ecoco_depthmaps_test/ecoco_depthmaps_test/train/ -c $PROJECT_DIR$/checkpoints/" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/image_reconstructor_switching.py" />
+      <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -83,7 +95,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="run_reconstruction" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="timing_evaluation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rpg_e2vid" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -95,28 +107,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run_reconstruction.py" />
-      <option name="PARAMETERS" value="-c pretrained/E2VID_lightweight.pth.tar   -i data/dynamic_6dof.zip   --auto_hdr   --display   --show_events" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="testbench" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="rpg_e2vid" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="$USER_HOME$/anaconda3/envs/event/bin/python" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/testbench.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/timing_evaluation.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -146,20 +137,41 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="training_switching" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="rpg_e2vid" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/anaconda3/envs/event/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/training_switching.py" />
+      <option name="PARAMETERS" value="-t $PROJECT_DIR$/..//ecoco_depthmaps_test/ecoco_depthmaps_test/train/ -c $PROJECT_DIR$/checkpoints/" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
-      <item itemvalue="Python.eval_checkpoint" />
-      <item itemvalue="Python.latency_training" />
-      <item itemvalue="Python.run_reconstruction" />
-      <item itemvalue="Python.testbench" />
       <item itemvalue="Python.training" />
+      <item itemvalue="Python.timing_evaluation" />
+      <item itemvalue="Python.training_switching" />
+      <item itemvalue="Python.image_reconstructor_switching" />
+      <item itemvalue="Python.eval_checkpoint_switching" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.eval_checkpoint" />
-        <item itemvalue="Python.latency_training" />
+        <item itemvalue="Python.eval_checkpoint_switching" />
+        <item itemvalue="Python.training_switching" />
+        <item itemvalue="Python.image_reconstructor_switching" />
+        <item itemvalue="Python.timing_evaluation" />
         <item itemvalue="Python.training" />
-        <item itemvalue="Python.run_reconstruction" />
-        <item itemvalue="Python.testbench" />
       </list>
     </recent_temporary>
   </component>
@@ -195,24 +207,13 @@
           <option name="timeStamp" value="134" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/model/submodules.py</url>
-          <line>40</line>
-          <option name="timeStamp" value="135" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/model/unet.py</url>
-          <line>111</line>
-          <option name="timeStamp" value="136" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/latency_training.py</url>
           <line>26</line>
           <option name="timeStamp" value="137" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/model/latency_unet.py</url>
-          <line>83</line>
-          <option name="timeStamp" value="140" />
+          <url>file://$PROJECT_DIR$/timing_evaluation.py</url>
+          <option name="timeStamp" value="138" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
