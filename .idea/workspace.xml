@@ -47,7 +47,28 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.eval_checkpoint_switching">
+  <component name="RunManager" selected="Python.eval_checkpoint">
+    <configuration name="eval_checkpoint" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="rpg_e2vid" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/anaconda3/envs/event/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/eval_checkpoint.py" />
+      <option name="PARAMETERS" value="-c checkpoints/m_4_199.pth   -i data/dynamic_6dof.zip   --auto_hdr   --display   --show_events" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="eval_checkpoint_switching" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rpg_e2vid" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -82,27 +103,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/image_reconstructor_switching.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="timing_evaluation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="rpg_e2vid" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="$USER_HOME$/anaconda3/envs/event/bin/python" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/timing_evaluation.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -155,18 +155,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.training" />
-      <item itemvalue="Python.timing_evaluation" />
       <item itemvalue="Python.training_switching" />
       <item itemvalue="Python.image_reconstructor_switching" />
       <item itemvalue="Python.eval_checkpoint_switching" />
+      <item itemvalue="Python.eval_checkpoint" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.eval_checkpoint" />
+        <item itemvalue="Python.training" />
         <item itemvalue="Python.eval_checkpoint_switching" />
         <item itemvalue="Python.training_switching" />
         <item itemvalue="Python.image_reconstructor_switching" />
-        <item itemvalue="Python.timing_evaluation" />
-        <item itemvalue="Python.training" />
       </list>
     </recent_temporary>
   </component>
