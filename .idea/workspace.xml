@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc9e207b-5b32-451e-830a-ed27ef121478" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/eval.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eval_checkpoint_switching.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/image_reconstructor_switching.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/timing_evaluation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/training_switching.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/training.py" beforeDir="false" afterPath="$PROJECT_DIR$/training.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eval_checkpoint_switching.py" beforeDir="false" afterPath="$PROJECT_DIR$/eval_checkpoint_switching.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,10 +203,6 @@
           <url>file://$PROJECT_DIR$/latency_training.py</url>
           <line>26</line>
           <option name="timeStamp" value="137" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/timing_evaluation.py</url>
-          <option name="timeStamp" value="138" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

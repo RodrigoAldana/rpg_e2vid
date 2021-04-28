@@ -47,18 +47,7 @@ if __name__ == "__main__":
     print('Sensor size: {} x {}'.format(width, height))
 
     # Load model
-    #model = load_model(args.path_to_model)
     model = torch.load(args.path_to_model)
-    # net_conf = {'num_bins': 5,
-    #             'recurrent_block_type': 'convlstm',
-    #             'base_num_channels': 32,
-    #             'num_encoders': 3,
-    #             'num_residual_blocks': 2,
-    #             'use_upsample_conv': False,
-    #             'norm': 'BN'}
-    # model = E2VIDRecurrent(net_conf)
-    # # model.unetrecurrent = trained_model.unetBase
-    # model.unetrecurrent = trained_model.unetReduced
     device = get_device(args.use_gpu)
     model = model.to(device)
     # model.eval()
