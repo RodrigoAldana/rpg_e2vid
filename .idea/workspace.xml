@@ -47,7 +47,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.eval_checkpoint">
+  <component name="RunManager" selected="Python.training">
     <configuration name="eval_checkpoint" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rpg_e2vid" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -162,8 +162,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.eval_checkpoint" />
         <item itemvalue="Python.training" />
+        <item itemvalue="Python.eval_checkpoint" />
         <item itemvalue="Python.eval_checkpoint_switching" />
         <item itemvalue="Python.training_switching" />
         <item itemvalue="Python.image_reconstructor_switching" />
