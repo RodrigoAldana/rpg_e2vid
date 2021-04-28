@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc9e207b-5b32-451e-830a-ed27ef121478" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/eval_checkpoint_refinement.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_reconstructor_refinement.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/training_refinement.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eval_checkpoint_switching.py" beforeDir="false" afterPath="$PROJECT_DIR$/eval_checkpoint_switching.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/unet.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/unet.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +51,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.training">
+  <component name="RunManager" selected="Python.training_refinement">
     <configuration name="eval_checkpoint" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rpg_e2vid" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -69,7 +73,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="eval_checkpoint_switching" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="eval_checkpoint_refinement" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rpg_e2vid" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -81,8 +85,8 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/eval_checkpoint_switching.py" />
-      <option name="PARAMETERS" value="-c checkpoints/m_4_199.pth   -i data/dynamic_6dof.zip   --auto_hdr   --display   --show_events" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/eval_checkpoint_refinement.py" />
+      <option name="PARAMETERS" value="-c checkpoints/m_22_399.pth   -i data/dynamic_6dof.zip   --auto_hdr   --display   --show_events" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -90,20 +94,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="image_reconstructor_switching" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="run_reconstruction" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rpg_e2vid" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="$USER_HOME$/anaconda3/envs/event/bin/python" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/image_reconstructor_switching.py" />
-      <option name="PARAMETERS" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run_reconstruction.py" />
+      <option name="PARAMETERS" value="-c pretrained/E2VID_lightweight.pth.tar   -i data/dynamic_6dof.zip   --auto_hdr   --display   --show_events" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -132,7 +136,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="training_switching" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="training_refinement" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rpg_e2vid" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -144,7 +148,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/training_switching.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/training_refinement.py" />
       <option name="PARAMETERS" value="-t $PROJECT_DIR$/..//ecoco_depthmaps_test/ecoco_depthmaps_test/train/ -c $PROJECT_DIR$/checkpoints/" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -155,18 +159,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.training" />
-      <item itemvalue="Python.training_switching" />
-      <item itemvalue="Python.image_reconstructor_switching" />
-      <item itemvalue="Python.eval_checkpoint_switching" />
       <item itemvalue="Python.eval_checkpoint" />
+      <item itemvalue="Python.training_refinement" />
+      <item itemvalue="Python.run_reconstruction" />
+      <item itemvalue="Python.eval_checkpoint_refinement" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.training_refinement" />
+        <item itemvalue="Python.eval_checkpoint_refinement" />
         <item itemvalue="Python.training" />
+        <item itemvalue="Python.run_reconstruction" />
         <item itemvalue="Python.eval_checkpoint" />
-        <item itemvalue="Python.eval_checkpoint_switching" />
-        <item itemvalue="Python.training_switching" />
-        <item itemvalue="Python.image_reconstructor_switching" />
       </list>
     </recent_temporary>
   </component>
@@ -196,11 +200,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/run_reconstruction.py</url>
-          <line>52</line>
-          <option name="timeStamp" value="134" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/latency_training.py</url>
           <line>26</line>

@@ -65,11 +65,19 @@ class EventData:
         events = self.event_preprocessor(events)
         events = self.crop.pad(events)
 
+        # frame = cv2.imread(frame_name)
+        # frame_tensor = torch.tensor(numpy.transpose(frame, (2, 0, 1)))
+        # frame_tensor = frame_tensor.type(torch.FloatTensor)
+        # frame_t = frame_tensor.unsqueeze(dim=0)
+        # frame_t = self.crop.pad(frame_t)
+
         frame = cv2.imread(frame_name)
-        frame_tensor = torch.tensor(numpy.transpose(frame, (2, 0, 1)))
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        frame_tensor = torch.tensor(frame)
         frame_tensor = frame_tensor.type(torch.FloatTensor)
-        frame_t = frame_tensor.unsqueeze(dim=0)
+        frame_t = torch.unsqueeze(frame_tensor.unsqueeze(dim=0), dim=0)
         frame_t = self.crop.pad(frame_t)
+
 
         flow_array = numpy.load(flow_name)
         flow_tensor = torch.tensor(flow_array)

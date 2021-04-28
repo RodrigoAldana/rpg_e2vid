@@ -176,3 +176,4 @@ class UNetRecurrent(BaseUNet):
         img = self.activation(self.pred(self.apply_skip_connection(x, head)))
 
         return img, states
+
