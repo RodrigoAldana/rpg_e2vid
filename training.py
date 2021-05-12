@@ -31,7 +31,7 @@ model = E2VIDRecurrent(net_conf)
 # With current GPU, L=40 is not possible. Check nvidia-smi in a terminal to monitor memory usage
 training_conf = {'learning_rate': 1e-4,
                  'epochs': 160,
-                 'unroll_L': 15,
+                 'unroll_L': 10,
                  'height': 180,
                  'width': 240,
                  'batch_size': 2,

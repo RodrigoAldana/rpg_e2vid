@@ -27,14 +27,14 @@ net_conf = {'num_bins': 5,
             'num_residual_blocks': 2,
             'use_upsample_conv': False,
             'norm': 'BN'}
-model = E2VIDRefine5(net_conf)
+model = E2VIDRefine4(net_conf)
 
 # Training configuration
 # Important: unroll_L defines how much data must be driven to the GPU at the same time.
 # With current GPU, L=40 is not possible. Check nvidia-smi in a terminal to monitor memory usage
 training_conf = {'learning_rate': 1e-4,
                  'epochs': 160,
-                 'unroll_L': 15,
+                 'unroll_L': 12,
                  'height': 180,
                  'width': 240,
                  'batch_size': 2,
@@ -95,9 +95,7 @@ for t in range(training_conf['epochs']):  # TRAIN FOR 160 EPOCHS
                 reference_frame = reference_frame/255
 
                 # Foward pass
-                mode = 0
-                model.signature = ("THIS MODEL WAS TRAINED USING MODE:",mode)
-                predicted_frame, states = model(events, states, mode)
+                predicted_frame, states = model(events, states)
                 prev_frame = predicted_frame
                 # Rescale image to range of 0-255.
                 # Same as intensity_rescaler(predicted_frame) but keeping floating point format
@@ -122,11 +120,13 @@ for t in range(training_conf['epochs']):  # TRAIN FOR 160 EPOCHS
                     prev_predicted_frame = predicted_frame
                     prev_reference_frame = reference_frame
 
+            print(seq)
+
         # Backpropagation
         optimizer.zero_grad()
         loss.sum().backward(retain_graph=True)
         optimizer.step()
-        print(loss)
+
         # Checkpoints
         with torch.no_grad():
             if (i+1) % training_conf['checkpoint_interval'] == 0:

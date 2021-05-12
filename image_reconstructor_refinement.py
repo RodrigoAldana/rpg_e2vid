@@ -20,7 +20,7 @@ class ImageReconstructorRefine:
         self.height = height
         self.width = width
         self.num_bins = num_bins
-        self.initial_guess = torch.zeros((1,1,height+4,width)).to(self.device)
+        self.initial_guess = torch.zeros((1,1,height,width)).to(self.device)
         self.initialize(self.height, self.width, options)
 
     def initialize(self, height, width, options):
@@ -77,7 +77,7 @@ class ImageReconstructorRefine:
                 # Reconstruct new intensity image for each channel (grayscale + RGBW if color reconstruction is enabled)
                 for channel in events_for_each_channel.keys():
                     with CudaTimer('Inference'):
-                        iterations = np.random.randint(5)+1
+                        iterations = 1 #np.random.randint(5)+1
                         inputs = events_for_each_channel[channel]
                         new_predicted_frame, states = self.model(inputs,
                                                                  self.last_states_for_each_channel[channel],

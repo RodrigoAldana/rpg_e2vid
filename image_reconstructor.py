@@ -76,10 +76,11 @@ class ImageReconstructor:
 
                 # Reconstruct new intensity image for each channel (grayscale + RGBW if color reconstruction is enabled)
                 for channel in events_for_each_channel.keys():
+                    mode = 0 # np.random.randint(2)
                     with CudaTimer('Inference'):
                         inputs = events_for_each_channel[channel]
-                        new_predicted_frame, states = self.model(inputs,
-                                                                 self.last_states_for_each_channel[channel])
+                        new_predicted_frame, states = self.model(inputs,self.last_states_for_each_channel[channel], mode)
+                        #new_predicted_frame, states = self.model(inputs, self.last_states_for_each_channel[channel])
 
                     if self.no_recurrent:
                         self.last_states_for_each_channel[channel] = None
