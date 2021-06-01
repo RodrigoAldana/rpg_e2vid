@@ -7,6 +7,9 @@ from dataset import EventData, EventSequences, flow_warp
 from options.inference_options import set_inference_options
 from utils.inference_utils import IntensityRescaler
 import argparse
+import numpy as np
+import cv2
+import torch
 
 args = argparse.ArgumentParser(description='Training a trained network')
 args.add_argument('-t', '--path-to-training-data', required=True, type=str,
@@ -19,24 +22,24 @@ options = args.parse_args()
 # Instantiate model as E2VIDRecurrent
 net_conf = {'num_bins': 5,
             'recurrent_block_type': 'convlstm',
-            'base_num_channels': 32,
+            'base_num_channels': 16,
             'num_encoders': 3,
-            'num_residual_blocks': 3,
+            'num_residual_blocks': 5,
             'use_upsample_conv': False,
             'norm': 'BN'}
-model = E2VIDRecurrent(net_conf)
-
+model = E2VIDRefine6(net_conf)
+# model = E2VIDRecurrent(net_conf)
 # Training configuration
 # Important: unroll_L defines how much data must be driven to the GPU at the same time.
 # With current GPU, L=40 is not possible. Check nvidia-smi in a terminal to monitor memory usage
 training_conf = {'learning_rate': 1e-4,
                  'epochs': 160,
-                 'unroll_L': 15,
+                 'unroll_L': 10,
                  'height': 180,
                  'width': 240,
                  'batch_size': 2,
                  'checkpoint_interval': 100,
-                 'max_iterations': 6,
+                 'max_iterations': 4,#18,
                  'use_ref_threshold': 0.9}
 
 # Set GPU as main torch device (if available) and move model to it
@@ -62,6 +65,9 @@ intensity_rescaler = IntensityRescaler(options)
 # Instantiate event dataset (only paths to data)
 sequences = EventSequences(options.path_to_training_data)
 # Training
+
+
+
 for t in range(training_conf['epochs']):  # TRAIN FOR 160 EPOCHS
     print('EPOCH ', t)
 
@@ -77,7 +83,7 @@ for t in range(training_conf['epochs']):  # TRAIN FOR 160 EPOCHS
                                 num_encoders=model.num_encoders, options=options)
             states = None
             current_L = 0
-
+            e, prev_frame, f = dataset.get_item(0, num_encoders=model.num_encoders)
             # Run the network over the current sequence and evaluate it over L intervals
             for time_interval in range(training_conf['unroll_L']):
                 events, reference_frame, flow = dataset.get_item(time_interval, num_encoders=model.num_encoders)
@@ -89,8 +95,14 @@ for t in range(training_conf['epochs']):  # TRAIN FOR 160 EPOCHS
                 reference_frame = reference_frame/255
 
                 # Foward pass
-                predicted_frame, states = model.forward(events, states)
-
+                if(np.random.rand(1)>training_conf['use_ref_threshold']):
+                    initial_guess = reference_frame
+                else:
+                    initial_guess =  prev_frame
+                # predicted_frame, states = model(events, states)
+                # predicted_frame, states = model(events, states, np.random.randint(training_conf['max_iterations']))
+                predicted_frame, states = model(events, states, training_conf['max_iterations'])
+                prev_frame = predicted_frame
                 # Rescale image to range of 0-255.
                 # Same as intensity_rescaler(predicted_frame) but keeping floating point format
                 # predicted_frame = intensity_rescaler.rescale(predicted_frame)
@@ -114,13 +126,12 @@ for t in range(training_conf['epochs']):  # TRAIN FOR 160 EPOCHS
                     prev_predicted_frame = predicted_frame
                     prev_reference_frame = reference_frame
 
-            print(seq)
-
         # Backpropagation
         optimizer.zero_grad()
         loss.sum().backward(retain_graph=True)
         optimizer.step()
-
+        print(loss)
+        # print(('scale',model.scale))
         # Checkpoints
         with torch.no_grad():
             if (i+1) % training_conf['checkpoint_interval'] == 0:

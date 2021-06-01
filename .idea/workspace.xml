@@ -2,15 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc9e207b-5b32-451e-830a-ed27ef121478" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/train_mem_first.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/validate_refinement.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/training_refine6.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/image_reconstructor.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_reconstructor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/image_reconstructor_refinement.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_reconstructor_refinement.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/unet.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/unet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/training.py" beforeDir="false" afterPath="$PROJECT_DIR$/training.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/training_refinement.py" beforeDir="false" afterPath="$PROJECT_DIR$/training_refinement.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/validate_refinement.py" beforeDir="false" afterPath="$PROJECT_DIR$/validate_refinement.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +52,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.training_refinement">
+  <component name="RunManager" selected="Python.training_refine6">
     <configuration name="eval_checkpoint" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rpg_e2vid" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -75,27 +74,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="train_mem_first" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="rpg_e2vid" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="$USER_HOME$/anaconda3/envs/event/bin/python" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train_mem_first.py" />
-      <option name="PARAMETERS" value="-t $PROJECT_DIR$/..//ecoco_depthmaps_test/ecoco_depthmaps_test/train/ -c $PROJECT_DIR$/checkpoints/" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="training" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rpg_e2vid" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -109,6 +87,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/training.py" />
+      <option name="PARAMETERS" value="-t $PROJECT_DIR$/..//ecoco_depthmaps_test/ecoco_depthmaps_test/train/ -c $PROJECT_DIR$/checkpoints/" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="training_refine6" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="rpg_e2vid" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/anaconda3/envs/event/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/training_refine6.py" />
       <option name="PARAMETERS" value="-t $PROJECT_DIR$/..//ecoco_depthmaps_test/ecoco_depthmaps_test/train/ -c $PROJECT_DIR$/checkpoints/" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -151,7 +150,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/validate_refinement.py" />
-      <option name="PARAMETERS" value="-t $PROJECT_DIR$/..//ecoco_depthmaps_test/ecoco_depthmaps_test/validation/ -c $PROJECT_DIR$/checkpoints/ -m $PROJECT_DIR$/checkpoints/m_40_399.pth" />
+      <option name="PARAMETERS" value="-t $PROJECT_DIR$/..//ecoco_depthmaps_test/ecoco_depthmaps_test/validation/ -c $PROJECT_DIR$/checkpoints/ -m $PROJECT_DIR$/checkpoints/m_34_99.pth" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -161,18 +160,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.eval_checkpoint" />
-      <item itemvalue="Python.train_mem_first" />
       <item itemvalue="Python.training" />
+      <item itemvalue="Python.training_refine6" />
       <item itemvalue="Python.training_refinement" />
       <item itemvalue="Python.validate_refinement" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.training_refine6" />
         <item itemvalue="Python.training_refinement" />
         <item itemvalue="Python.validate_refinement" />
         <item itemvalue="Python.training" />
         <item itemvalue="Python.eval_checkpoint" />
-        <item itemvalue="Python.train_mem_first" />
       </list>
     </recent_temporary>
   </component>
@@ -212,9 +211,14 @@
           <option name="timeStamp" value="138" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/model/model.py</url>
-          <line>303</line>
-          <option name="timeStamp" value="142" />
+          <url>file://$PROJECT_DIR$/training_refine6.py</url>
+          <line>103</line>
+          <option name="timeStamp" value="144" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/validate_refinement.py</url>
+          <line>26</line>
+          <option name="timeStamp" value="145" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

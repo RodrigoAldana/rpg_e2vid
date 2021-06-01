@@ -67,9 +67,12 @@ with torch.no_grad():
 
             # Foward pass
             initial_guess = prev_frame.to(device)
+            # model.unetrecurrent0.final_activation = True
+            # model.unetrecurrent1.final_activation = True
+            # predicted_frame, states = model(events, states, 0)
             # predicted_frame, states = model(events, states)
-            predicted_frame, states = model(events, states, 1)
-            prev_frame = predicted_frame
+            predicted_frame, states = model(events, states, 6)
+            # prev_frame = predicted_frame
             # Rescale image to range of 0-255.
             # Same as intensity_rescaler(predicted_frame) but keeping floating point format
             # predicted_frame = intensity_rescaler.rescale(predicted_frame)

@@ -365,7 +365,10 @@ class UNetHeadless(BaseUNet):
         super(UNetHeadless, self).__init__(num_input_channels, num_output_channels, skip_type, activation,
                                             num_encoders, base_num_channels, num_residual_blocks, norm,
                                             use_upsample_conv)
-
+        if activation == 'none':
+            self.final_activation = False
+        else:
+            self.final_activation = True
         self.head = ConvLayer(self.num_input_channels, self.base_num_channels,
                               kernel_size=5, stride=1, padding=2)  # N x C x H x W -> N x 32 x H x W
 
@@ -404,6 +407,9 @@ class UNetHeadless(BaseUNet):
             x = decoder(self.apply_skip_connection(x, blocks[self.num_encoders - i - 1]))
 
         # tail
-        img = self.activation(self.pred(self.apply_skip_connection(x, head)))
+        if self.final_activation:
+            img = self.activation(self.pred(self.apply_skip_connection(x, head)))
+        else:
+            img = self.pred(self.apply_skip_connection(x, head))
 
         return img

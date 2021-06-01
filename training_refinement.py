@@ -20,21 +20,35 @@ set_inference_options(args)
 options = args.parse_args()
 
 # Instantiate model as E2VIDRecurrent
+# net_conf = {'num_bins': 5,
+#             'recurrent_block_type': 'convlstm',
+#             'base_num_channels': 32,
+#             'num_encoders': 3,
+#             'num_residual_blocks': 5,
+#             'use_upsample_conv': False,
+#             'norm': 'BN',
+#             'head_layers': 7,
+#             'head_channels': 4}
+
 net_conf = {'num_bins': 5,
             'recurrent_block_type': 'convlstm',
-            'base_num_channels': 32,
+            'base_num_channels': 8,
             'num_encoders': 3,
-            'num_residual_blocks': 2,
+            'num_residual_blocks': 5,
             'use_upsample_conv': False,
-            'norm': 'BN'}
+            'norm': 'BN',
+            'head_layers': 3,
+            'head_channels': 16}
 model = E2VIDRefine5(net_conf)
-
+# model = E2VIDRecurrent(net_conf)
+total_params = sum(p.numel() for p in model.parameters())
+# model = torch.load('/home/aldana-lab/event_sandbox/rpg_e2vid/checkpoints/reference/32/m_16_399.pth')
 # Training configuration
 # Important: unroll_L defines how much data must be driven to the GPU at the same time.
 # With current GPU, L=40 is not possible. Check nvidia-smi in a terminal to monitor memory usage
 training_conf = {'learning_rate': 1e-4,
                  'epochs': 160,
-                 'unroll_L': 15,
+                 'unroll_L': 11,
                  'height': 180,
                  'width': 240,
                  'batch_size': 2,
@@ -98,6 +112,7 @@ for t in range(training_conf['epochs']):  # TRAIN FOR 160 EPOCHS
                 mode = 0
                 model.signature = ("THIS MODEL WAS TRAINED USING MODE:",mode)
                 predicted_frame, states = model(events, states, mode)
+                # predicted_frame, states = model(events, states)
                 prev_frame = predicted_frame
                 # Rescale image to range of 0-255.
                 # Same as intensity_rescaler(predicted_frame) but keeping floating point format
